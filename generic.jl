@@ -22,3 +22,5 @@ Base.:*(A::OuterProduct, B::AbstractMatrix) = A.u * (A.v' * B)
 Base.:*(A::AbstractMatrix, B::OuterProduct) = (A*B.u) * B.v'
 
 @which B*A
+
+Base.:*(A::OuterProduct, B::OuterProduct) = OuterProduct(A.u * (A.v'*B.u), B.v)
