@@ -12,12 +12,12 @@ v = randn(N)
 A = OuterProduct(u, v)
 
 Matrix(A)
-
+B = randn(N, N)
 @which  A*B
 
 Base.:*(A::OuterProduct, B::AbstractMatrix) = A.u * (A.v' * B)
 
-@which  A*B
+@which A*B
 
 Base.:*(A::AbstractMatrix, B::OuterProduct) = (A*B.u) * B.v'
 
