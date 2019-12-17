@@ -2,10 +2,10 @@ using AbstractTrees
 
 AbstractTrees.children(x::Type) = subtypes(x)
 
-print_tree(Number)
+AbstractTrees.print_tree(Number)
 
-print_tree(AbstractArray)
+AbstractTrees.print_tree(AbstractArray)
 
 using Yao
 
-print_tree(AbstractBlock)
+AbstractTrees.print_tree(AbstractBlock)

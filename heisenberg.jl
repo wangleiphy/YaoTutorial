@@ -16,6 +16,7 @@ s |> te
 s |> te'
 
 Matrix(te)
+Matrix(te*te')
 
 parameters(te)
 dispatch!(te, 2.0)

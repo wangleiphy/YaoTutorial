@@ -1,6 +1,6 @@
-struct OuterProduct{T} <: AbstractMatrix{T}
-     u::Vector{T}
-     v::Vector{T}
+struct OuterProduct{T, V<:AbstractVector{T}} <: AbstractMatrix{T}
+     u::V
+     v::V
 end
 
 Base.size(c::OuterProduct) = length(c.u), length(c.v)
@@ -13,6 +13,10 @@ A = OuterProduct(u, v)
 
 Matrix(A)
 B = randn(N, N)
+
+using BenchmarkTools
+@btime A*B;
+
 @which  A*B
 
 Base.:*(A::OuterProduct, B::AbstractMatrix) = A.u * (A.v' * B)
@@ -24,3 +28,9 @@ Base.:*(A::AbstractMatrix, B::OuterProduct) = (A*B.u) * B.v'
 @which B*A
 
 Base.:*(A::OuterProduct, B::OuterProduct) = OuterProduct(A.u * (A.v'*B.u), B.v)
+
+using CuArrays
+A_cuda = OuterProduct(CuArray(u), CuArray(v))
+B_cuda = CuArray(B)
+
+@btime A_cuda * B_cuda
